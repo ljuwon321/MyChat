@@ -1,6 +1,9 @@
 package com.ljuwon.mychat;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -26,12 +29,15 @@ public class LoginActivity extends AppCompatActivity {
     EditText profile_et;
     String user_name, image_url;
     StringUtils StringUtils;
+    SharedPreferences pref;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
 
         toolbar = (Toolbar) findViewById(R.id.chat_toolbar);
         setSupportActionBar(toolbar);
@@ -44,6 +50,12 @@ public class LoginActivity extends AppCompatActivity {
         login_bt = (Button)findViewById(R.id.login_bt);
         nick_et = (EditText)findViewById(R.id.nick_et);
         profile_et = (EditText)findViewById(R.id.profile_et);
+
+        if(!StringUtils.isBlank(pref.getString("username", "")))
+            nick_et.setText(pref.getString("username", ""));
+
+        if(!StringUtils.isBlank(pref.getString("profile", "")))
+            profile_et.setText(pref.getString("profile", ""));
 
         login_bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +76,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 intent.putExtra("nickname", user_name);
                 intent.putExtra("profile_url", image_url);
+
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putString("username", user_name);
+                editor.putString("profile", image_url);
+                editor.commit();
 
                 nick_et.setText(user_name);
                 profile_et.setText(image_url);
