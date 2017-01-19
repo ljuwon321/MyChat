@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/login_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ToolbarTheme"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/nick_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:layout_margin="10dp"
+            android:hint="@string/nick_hint"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="15dp"
+            android:background="@null"
+            android:textColorHint="#C6C6C6" />
+        <EditText
+            android:id="@+id/profile_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:layout_margin="10dp"
+            android:hint="@string/profile_hint"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="15dp"
+            android:background="@null"
+            android:textColorHint="#C6C6C6" />
+        <Button
+            android:id="@+id/login_bt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:layout_margin="10dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorBackground"
+            android:text="@string/login" />
+    </LinearLayout>
+
+</LinearLayout>
