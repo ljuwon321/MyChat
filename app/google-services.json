@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "795980637023",
+    "firebase_url": "https://mychat-c0670.firebaseio.com",
+    "project_id": "mychat-c0670",
+    "storage_bucket": "mychat-c0670.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795980637023:android:7003972e3065dd89",
+        "android_client_info": {
+          "package_name": "com.ljuwon.mychat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "795980637023-0b47iqciqs3s47cthh6bnhsmbas4uoaa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ljuwon.mychat",
+            "certificate_hash": "CB9C3BA4620008FF8CE833D07DA684D10C08CBB6"
+          }
+        },
+        {
+          "client_id": "795980637023-686et35vme74p7m9hr1ua0tl15o4ea7b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj1FQoUy7Njb1cZVszvmhYQ5ExNyf83IA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "795980637023-686et35vme74p7m9hr1ua0tl15o4ea7b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
