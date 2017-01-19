@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -68,10 +69,16 @@ public class LoginActivity extends AppCompatActivity {
                         image_url = "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn1.iconfinder.com%2Fdata%2Ficons%2Fcrimes-and-justice%2F100%2F14-512.png&type=b400";
                 }
                 else {
-                    user_name = nick_et.getText().toString();
-                    image_url = profile_et.getText().toString();
-                    if(StringUtils.isBlank(profile_et.getText().toString()))
-                        image_url = "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn1.iconfinder.com%2Fdata%2Ficons%2Fcrimes-and-justice%2F100%2F14-512.png&type=b400";
+                    if(nick_et.getText().toString().length() > 20) {
+                        Toast.makeText(LoginActivity.this, "닉네임은 최대 20글자까지 적을 수 있습니다", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else {
+                        user_name = nick_et.getText().toString();
+                        image_url = profile_et.getText().toString();
+                        if (StringUtils.isBlank(profile_et.getText().toString()))
+                            image_url = "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn1.iconfinder.com%2Fdata%2Ficons%2Fcrimes-and-justice%2F100%2F14-512.png&type=b400";
+                    }
                 }
 
                 intent.putExtra("nickname", user_name);
