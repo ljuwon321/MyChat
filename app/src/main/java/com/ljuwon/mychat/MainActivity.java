@@ -4,10 +4,8 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -29,21 +28,20 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     public static ListView chat_list;
-    Button send_bt;
+    ImageButton send_bt;
     EditText message;
     String user_name;
     public static String image_url;
 
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference databaseReference = firebaseDatabase.getReference();
-    Chat_adapter adapter;
+    ChatAdapter adapter;
 
     ClipboardManager clipboardManager;
 
@@ -86,13 +84,14 @@ public class MainActivity extends AppCompatActivity {
         image_url = intent.getStringExtra("profile_url");
         email = "user" + new Random().nextInt(10000) + "@gmail.com"; //계정 연동시 사용함
 
-        clipboardManager = (ClipboardManager)getSystemService(CLIPBOARD_SERVICE);
-        chat_list = (ListView)findViewById(R.id.listView);
-        send_bt = (Button)findViewById(R.id.send);
-        message = (EditText)findViewById(R.id.chat_et);
+        clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        chat_list = (ListView) findViewById(R.id.listView);
+        send_bt = (ImageButton) findViewById(R.id.send);
+        message = (EditText) findViewById(R.id.chat_et);
 
-        adapter = new Chat_adapter(this, mListData);
+        adapter = new ChatAdapter(this, mListData);
         ScrollBottom();
+
         chat_list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
