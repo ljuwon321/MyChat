@@ -2,9 +2,10 @@
     <string name="app_name">MyChat</string>
     <string name="chat_hint">Type Message...</string>
     <string name="send">Send</string>
-    <string name="banType">올바르지 않은 메세지입니다!</string>
-    <string name="nick_hint">닉네임</string>
-    <string name="nick_send">중복 확인</string>
-    <string name="login">로그인</string>
-    <string name="profile_hint">프로필 이미지 URL</string>
+    <string name="nick_hint">Nickname</string>
+    <string name="nick_send">Availability check</string>
+    <string name="login">Login</string>
+    <string name="banType">This message is not right!</string>
+    <string name="upload_fail">Profile image upload failed.</string>
+    <string name="loading">Loading...</string>
 </resources>

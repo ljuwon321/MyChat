@@ -1,2 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">MyChat</string>
+    <string name="banType">올바르지 않은 메시지입니다!</string>
+    <string name="chat_hint">메시지를 적어주세요...</string>
+    <string name="login">로그인</string>
+    <string name="nick_hint">닉네임</string>
+    <string name="nick_send">중복 확인</string>
+    <string name="send">전송</string>
+    <string name="upload_fail">프로필 이미지 등록을 실패하였습니다.</string>
+    <string name="loading">로딩중...</string>
+</resources>
