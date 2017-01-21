@@ -1,21 +1,31 @@
 package com.ljuwon.mychat;
 
-/**
- * Created by 주원 on 2017-01-18.
- */
 public class ChatData {
+    public static final String MESSAGE = "message";
+    public static final String IMAGE = "image";
+
+    private String type;
     private String userName;
     private String message;
     private String image_url;
     private String time;
 
-    public ChatData() { }
+    public ChatData() {}
 
-    public ChatData(String userName, String message, String image_url, String time) {
+    public ChatData(String type, String userName, String message, String Image_url, String time) {
+        this.type = type;
         this.userName = userName;
         this.message = message;
-        this.image_url = image_url;
+        this.image_url = Image_url;
         this.time = time;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getUserName() {

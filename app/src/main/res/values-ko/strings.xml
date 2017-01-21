@@ -10,4 +10,7 @@
     <string name="upload_fail">프로필 이미지 등록을 실패하였습니다.</string>
     <string name="loading">로딩중...</string>
     <string name="copy">클립보드에 복사되었습니다.</string>
+    <string name="select_type">파일 타입을 선택해 주세요.</string>
+    <string name="image">사진</string>
+    <string name="old_client">오래된 클라이언트 버전입니다, 업데이트를 해주세요.</string>
 </resources>

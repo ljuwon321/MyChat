@@ -1,77 +1,126 @@
 package com.ljuwon.mychat;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Created by 주원 on 2017-01-18.
- */
-public class ChatAdapter extends BaseAdapter {
-    private Context mContext;
-    private List<ChatData> listItem = null;
-    LayoutInflater mLayoutInflater;
-    ViewHolder holder;
+public class ChatAdapter extends RecyclerView.Adapter {
+    private Activity activity;
+    private Context context;
+    private List<ChatData> listItem;
+    private LayoutInflater layoutInflater;
 
-    public ChatAdapter(Context context, ArrayList<ChatData> listItem) {
-        mContext = context;
+    public ChatAdapter(Activity activity) {
+        this.activity = activity;
+        this.context = activity.getApplicationContext();
+        this.listItem = new ArrayList<>();
+        layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public ChatAdapter(Activity activity, ArrayList<ChatData> listItem) {
+        this.activity = activity;
+        this.context = activity.getApplicationContext();
         this.listItem = listItem;
-        mLayoutInflater = (LayoutInflater) mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public int getCount() {
-        return listItem.size();
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item, parent, false);
+
+        return new ChatHolder(itemView);
     }
 
-    public ChatData getItem(int i) {
-        return listItem.get(i);
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder originHolder, int position) {
+        ChatHolder holder = (ChatHolder) originHolder;
+        ChatData data = listItem.get(position);
+
+        holder.nick.setText(data.getUserName());
+        holder.time.setText(data.getTime());
+        Glide.with(context).load(data.getImage_url()).into(holder.image);
+
+        Log.d("MyChat/Adapter", "START: " + data.getType());
+
+        try {
+            if(data.getType().equals(ChatData.MESSAGE)) {
+                holder.message.setVisibility(View.VISIBLE);
+                holder.messageImage.setVisibility(View.GONE);
+                holder.message.setText(data.getMessage());
+                Log.d("MyChat/Adapter", "text");
+            } else if(data.getType().equals(ChatData.IMAGE)) {
+                holder.message.setVisibility(View.GONE);
+                holder.messageImage.setVisibility(View.VISIBLE);
+                Glide.with(context).load(data.getMessage()).into(holder.messageImage);
+                Log.d("MyChat/Adapter", "image");
+            }
+            Log.d("MyChat/Adapter", "END");
+        } catch (Exception e) {
+            e.printStackTrace();
+            holder.messageImage.setVisibility(View.GONE);
+            holder.message.setText(data.getMessage());
+            Log.d("MyChat/Adapter", "error");
+        }
     }
 
-    public long getItemId(int i) {
-        return i;
+    @Override
+    public int getItemCount() {
+        try {
+            return listItem.size();
+        } catch(Exception e) {
+            return 0;
+        }
     }
 
-    class ViewHolder {
+    public void addItem(ChatData item) {
+        if(item == null) {
+            Log.w("MyChat/chatList", "item is null!");
+            return;
+        }
+        listItem.add(item);
+        this.notifyDataSetChanged();
+    }
+
+    public void setItems(ArrayList<ChatData> list) {
+        listItem = list;
+        this.notifyDataSetChanged();
+    }
+
+    private class ChatHolder extends RecyclerView.ViewHolder {
         public TextView nick;
         public TextView message;
-        public CircleImageView ci;
-        public TextView ctime;
-    }
+        public TextView time;
+        public ImageView messageImage;
+        public CircleImageView image;
 
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
-            holder = new ViewHolder();
+        public ChatHolder(View itemView) {
+            super(itemView);
 
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.chat_item, null);
-
-            holder.nick = (TextView) convertView.findViewById(R.id.nick);
-            holder.message = (TextView) convertView.findViewById(R.id.message);
-            holder.ci = (CircleImageView) convertView.findViewById(R.id.messengerImageView);
-            holder.ctime = (TextView) convertView.findViewById(R.id.ctime);
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+            nick = (TextView) itemView.findViewById(R.id.nick);
+            message = (TextView) itemView.findViewById(R.id.message);
+            time = (TextView) itemView.findViewById(R.id.ctime);
+            messageImage = (ImageView) itemView.findViewById(R.id.image);
+            image = (CircleImageView) itemView.findViewById(R.id.messengerImageView);
         }
-
-        ChatData mData = listItem.get(position);
-
-        holder.nick.setText(mData.getUserName());
-        holder.message.setText(mData.getMessage());
-        holder.ctime.setText(mData.getTime());
-        Glide.with(mContext).load(mData.getImage_url()).into(holder.ci);
-
-        return convertView;
     }
 }

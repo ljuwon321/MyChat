@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private String nick = "";
     private final String imagePath = Environment.getExternalStorageDirectory() + "/Android/data/com.ljuwon.mychat/profile.jpg";
-    private String imageUrl = "";
+    private String imageUrl = "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fcdn1.iconfinder.com%2Fdata%2Ficons%2Fcrimes-and-justice%2F100%2F14-512.png&type=b400";
 
     private String androidID;
 
