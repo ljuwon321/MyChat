@@ -16,16 +16,22 @@
 
     <FrameLayout
         android:id="@+id/profile_image_layout"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+        android:layout_width="132dp"
+        android:layout_height="132dp"
         android:layout_gravity="center|center"
-        android:background="?attr/selectableItemBackground">
+        android:background="?attr/selectableItemBackgroundBorderless">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="132dp"
+            android:layout_height="132dp"
+            android:src="@color/colorAccent"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="128dp"
             android:layout_height="128dp"
-            android:src="@color/cardview_dark_background"/>
+            android:layout_gravity="center|center"
+            android:src="#6D6D6D"/>
 
         <ImageView
             android:layout_width="64dp"

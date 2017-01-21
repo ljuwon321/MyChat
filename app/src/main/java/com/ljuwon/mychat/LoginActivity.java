@@ -1,8 +1,11 @@
 package com.ljuwon.mychat;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,6 +28,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     private FrameLayout profileImageLayout;
     private CircleImageView profileImage;
     private TextInputEditText nickname;
+    private SharedPreferences pref;
 
     private FirebaseStorage storage;
 
@@ -57,14 +63,23 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
+
         androidID = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         FloatingActionButton loginButton = (FloatingActionButton) findViewById(R.id.login_button);
         loginButton.setOnClickListener((view) -> {
             nick = nickname.getText().toString();
-            Snackbar.make(view, getString(R.string.loading), Snackbar.LENGTH_SHORT).show();
+
+            Snackbar load = Snackbar.make(view, getString(R.string.loading), Snackbar.LENGTH_INDEFINITE);
+            load.show();
+
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("username", nick);
+            editor.commit();
 
             uploadImageFile((exception) -> {
+                load.dismiss();
                 Snackbar.make(view, getString(R.string.upload_fail), Snackbar.LENGTH_SHORT).show();
             }, (taskSnapshot) -> {
                 UploadTask.TaskSnapshot snapshot = (UploadTask.TaskSnapshot) taskSnapshot;
@@ -78,6 +93,7 @@ public class LoginActivity extends AppCompatActivity {
                 MainActivity.setImageUrl(imageUrl);
                 MainActivity.setNickname(nick);
 
+                load.dismiss();
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             });
@@ -86,6 +102,9 @@ public class LoginActivity extends AppCompatActivity {
         profileImageLayout = (FrameLayout) findViewById(R.id.profile_image_layout);
         profileImage = (CircleImageView) findViewById(R.id.profile_image);
         nickname = (TextInputEditText) findViewById(R.id.profile_name);
+
+        if(!StringUtils.isBlank(pref.getString("username", "")))
+            nickname.setText(pref.getString("username", ""));
 
         profileImageLayout.setClickable(true);
         profileImageLayout.setOnClickListener((view) -> {
@@ -104,6 +123,9 @@ public class LoginActivity extends AppCompatActivity {
 
             startActivityForResult(intent, GALLERY_CALL);
         });
+
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        profileImage.setImageBitmap(bitmap);
     }
 
     @Override
@@ -113,8 +135,10 @@ public class LoginActivity extends AppCompatActivity {
                 Bundle extra = data.getExtras();
                 Bitmap bitmap = extra.getParcelable("data");
 
+                File dir = new File(Environment.getExternalStorageDirectory(), "Android/data/com.ljuwon.mychat");
+                dir.mkdirs();
+
                 File file = new File(imagePath);
-                file.getParentFile().mkdirs();
                 try {
                     FileOutputStream stream = new FileOutputStream(file);
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);

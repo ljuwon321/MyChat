@@ -61,9 +61,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.chat_toolbar);
         setSupportActionBar(toolbar);
 
-        //email = "user" + new Random().nextInt(10000) + "@gmail.com"; //계정 연동시 사용함
-
         clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+
         chat_list = (ListView) findViewById(R.id.listView);
         send_bt = (ImageButton) findViewById(R.id.send);
         message = (EditText) findViewById(R.id.chat_et);
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         chat_list.setOnItemLongClickListener((parent, view, position, id) -> {
-            Toast.makeText(MainActivity.this, "클립보드에 복사되었습니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getString(R.string.copy), Toast.LENGTH_SHORT).show();
             ChatData chatData = adapter.getItem(position);
             ClipData clipData = ClipData.newPlainText("label",chatData.getMessage());
             clipboardManager.setPrimaryClip(clipData);

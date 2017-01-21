@@ -9,6 +9,7 @@
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
+        app:cardBackgroundColor="@color/colorPrimary"
         app:cardUseCompatPadding="true"
         app:cardElevation="4dp"
         app:cardCornerRadius="18dp">
@@ -24,14 +25,14 @@
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_add_black_24dp" />
+                android:src="@drawable/ic_add_white_24dp" />
 
             <View
                 android:layout_width="1px"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="#FF000000"/>
+                android:background="#FFFFFFFF"/>
 
             <EditText
                 android:id="@+id/chat_et"
@@ -39,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/chat_hint"
-                android:color="#000000"
+                android:textColor="#FFFFFFFF"
                 android:layout_margin="4dp"
                 android:background="@null"
                 android:textColorHint="#C6C6C6" />
@@ -49,14 +50,14 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="#FF000000"/>
+                android:background="#FFFFFFFF"/>
 
             <ImageButton
                 android:id="@+id/send"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_send_black_24dp" />
+                android:src="@drawable/ic_send_white_24dp" />
 
         </LinearLayout>
 
@@ -66,6 +67,7 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_weight="1"
         android:paddingBottom="64dp"
         android:clipToPadding="false"
